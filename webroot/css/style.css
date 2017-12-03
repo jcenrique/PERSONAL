@@ -1,0 +1,10 @@
+.navbar{
+	border-radius: 0;
+	margin-bottom: 0;
+}
+/**
+hace scroll en las tablas
+*/
+.scrollme {
+    overflow-y: auto;
+}

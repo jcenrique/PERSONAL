@@ -27,7 +27,11 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
+    public $helpers = [
+    'Gravatar' => [
+        'className' => 'GravatarHelper.Gravatar'
+    ]
+];
     /**
      * Initialization hook method.
      *
@@ -43,6 +47,36 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Auth',[
+            'authorize' => ['Controller'],
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email' ,
+                        'password' => 'password'
+                    ],
+                    'finder' => 'auth'
+                ]
+            ],
+            'loginAction' => [
+                'controller'    => 'Users',
+                'action'    => 'login'
+            ],
+            'authError' => 'Ingrese sus datos correctos',
+            'loginRedirect' => [
+                'controller' => 'users',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller'     => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [ // pagina a la que devuelve si no esta autorizado
+                'controller' => 'users',
+                'action' => 'index'
+            ]
+           
+            ]);
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -65,5 +99,21 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+    public function beforeFilter(Event $event)
+    {
+        $this->set('current_user',$this->Auth->user());
+        
+        
+    }
+    
+   public function isAuthorized($user){
+        
+        if(isset($user['role_id']) and $user ['role_id'] == 1){
+            return true;
+        }
+        return false;
+        
+        
     }
 }

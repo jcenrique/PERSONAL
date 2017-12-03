@@ -40,6 +40,7 @@ if (!extension_loaded('mbstring')) {
  */
 require __DIR__ . '/paths.php';
 
+
 /*
  * Bootstrap CakePHP.
  *
@@ -77,6 +78,7 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
+    
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -222,3 +224,6 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+Plugin::load('BootstrapUI');
+Configure::load('constantes');

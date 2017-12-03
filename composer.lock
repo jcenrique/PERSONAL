@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea3c478c2ccdb8d48fac10fdee52b565",
+    "content-hash": "acde0adb3a5f70deb52bc826f1a98787",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -350,6 +350,56 @@
             "time": "2017-03-21T13:48:47+00:00"
         },
         {
+            "name": "friendsofcake/bootstrap-ui",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfCake/bootstrap-ui.git",
+                "reference": "fd02bdcd2bb3f58fa7e68c4d770836e0ac9ac988"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfCake/bootstrap-ui/zipball/fd02bdcd2bb3f58fa7e68c4d770836e0ac9ac988",
+                "reference": "fd02bdcd2bb3f58fa7e68c4d770836e0ac9ac988",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "<6.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "BootstrapUI\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/friendsofcake/bootstrap-ui/graphs/contributors"
+                }
+            ],
+            "description": "Twitter Bootstrap 3 support for CakePHP 3",
+            "homepage": "http://github.com/friendsofcake/bootstrap-ui",
+            "keywords": [
+                "bootstrap",
+                "cakephp",
+                "twitter"
+            ],
+            "time": "2017-08-04T00:58:47+00:00"
+        },
+        {
             "name": "mobiledetect/mobiledetectlib",
             "version": "2.8.26",
             "source": {
@@ -400,6 +450,54 @@
                 "php mobile detect"
             ],
             "time": "2017-08-29T18:23:54+00:00"
+        },
+        {
+            "name": "potatopowered/gravatar-helper",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PotatoPowered/gravatar-helper.git",
+                "reference": "e5f08e89bef974720c37f381ec0b838cfee9fcb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PotatoPowered/gravatar-helper/zipball/e5f08e89bef974720c37f381ec0b838cfee9fcb8",
+                "reference": "e5f08e89bef974720c37f381ec0b838cfee9fcb8",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0",
+                "php": ">=5.4.16"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "dev-master",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "GravatarHelper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Blake Sutton",
+                    "email": "sutton.blake@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A helper that can be used to pull profile pictures from the gravatar service for CakePHP 3.x ",
+            "keywords": [
+                "avatar",
+                "cakephp",
+                "gravatar",
+                "helper"
+            ],
+            "time": "2016-02-23T05:16:59+00:00"
         },
         {
             "name": "psr/http-message",
