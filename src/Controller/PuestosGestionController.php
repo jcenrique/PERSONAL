@@ -19,10 +19,10 @@ class PuestosGestionController extends AppController
      */
     public function index()
     {
-        $puestosGestion = $this->paginate($this->PuestosGestion);
+        $puestosGestion = $this->PuestosGestion->find('all');
 
         $this->set(compact('puestosGestion'));
-        $this->set('_serialize', ['puestosGestion']);
+        
     }
 
     /**

@@ -5,25 +5,31 @@
   
 
 ?>
-
-<div class="row">
- <div class="col-md-6 col-md-offset-3">
-        <div class="page-header">
-            <h3><?= __('Registrar usuario') ?></h3>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+            
+                 <h4><?= __('Registrar Usuario') ?>
+                 </h4>
+                
         </div>
-    <?= $this->Form->create($user) ?>
-    <fieldset>
         
-        <?php
-            echo $this->Form->input('username',['label'=>__('Usuario')]);
-            echo $this->Form->input('firts_name',['label'=>__('Nombre')]);
-            echo $this->Form->input('last_name',['label'=>__('Apellidos')]);
-            echo $this->Form->input('password',['label'=>__('Contraseña')]);
-            echo $this->Form->input('email',['label'=>__('Correo')]);
-           
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Crear'),['class'=> 'btn btn-success']) ?>
-    <?= $this->Form->end() ?>
+        <div class="panel-body">
+            <?= $this->Form->create($user) ?>
+            <?php
+                echo $this->Form->input('username',['label'=>__('Usuario')]);
+                echo $this->Form->input('firts_name',['label'=>__('Nombre')]);
+                echo $this->Form->input('last_name',['label'=>__('Apellidos')]);
+                echo $this->Form->input('password',['label'=>__('Contraseña'), 'value' => '']);
+                echo $this->Form->input('email',['label'=>__('Correo')]);
+                
+                
+            ?>
+        </div>
+        <div class="panel-footer">
+            <?= $this->Form->button(__('Crear'),['class'=> 'btn btn-success']) ?>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
 </div>
-<div>

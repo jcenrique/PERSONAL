@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 
 /**
  * Application Controller
@@ -59,25 +60,26 @@ class AppController extends Controller
                 ]
             ],
             'loginAction' => [
-                'controller'    => 'Users',
+                'controller'    => '../Users',
                 'action'    => 'login'
             ],
-            'authError' => 'Ingrese sus datos correctos',
             'loginRedirect' => [
-                'controller' => 'users',
+                'controller' => '../users',
                 'action' => 'index'
             ],
             'logoutRedirect' => [
-                'controller'     => 'Users',
+                'controller'     => '../Users',
                 'action' => 'login'
             ],
             'unauthorizedRedirect' => [ // pagina a la que devuelve si no esta autorizado
-                'controller' => 'users',
-                'action' => 'index'
+                'controller' => '..//users',
+                'action' => 'home' 
             ]
            
             ]);
 
+
+       
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -99,18 +101,24 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+        
+        
     }
     public function beforeFilter(Event $event)
     {
-        $this->set('current_user',$this->Auth->user());
+    // I18n::setLocale('es_ES');
+       $this->set('current_user',$this->Auth->user());
         
-        
+       
     }
     
    public function isAuthorized($user){
         
         if(isset($user['role_id']) and $user ['role_id'] == 1){
             return true;
+        }
+        if (!$this->Auth->user()) {
+            $this->Auth->config('authError', false);
         }
         return false;
         

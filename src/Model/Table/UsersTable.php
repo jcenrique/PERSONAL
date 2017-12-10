@@ -55,34 +55,36 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+       ->add('id' , 'valid' , ['rule' => 'numeric'])
+       ->notEmpty('id' , 'create');
 
+       $validator
+       ->requirePresence('firts_name' , 'create')
+       ->notEmpty('first_name', __('El campo no puede estar vacio'));
+       
         $validator
-            ->requirePresence('username', 'create')
-            ->notEmpty('username');
+       ->requirePresence('last_name' , 'create')
+       ->notEmpty('last_name' , __('El campo no puede estar vacio'));
+       
+         $validator
+       ->requirePresence('username' , 'create')
+       ->notEmpty('username' , __('El campo no puede estar vacio'));
+       
+        $validator
+       ->add('email' , 'valid' , ['rule' => 'email', 'message' => __('El formato de correo no es correcto')])
+       ->requirePresence('email' , 'create')
+       ->notEmpty('email', __('El campo no puede estar vacio'));
+       
+        $validator
+            ->requirePresence('password' , 'create')
+            ->notEmpty('password' , __('El campo no puede estar vacio') , 'create');
 
-        $validator
-            ->requirePresence('firts_name', 'create')
-            ->notEmpty('firts_name');
-
-        $validator
-            ->requirePresence('last_name', 'create')
-            ->notEmpty('last_name');
-
-        $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
-
-        $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+       
 
         $validator
            
             ->requirePresence('role_id', 'create')
-            ->notEmpty('role_id');
+            ->notEmpty('role_id' , __('El campo no puede estar vacio'));
 
         return $validator;
     }
@@ -98,6 +100,7 @@ class UsersTable extends Table
     {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
+        
 
         return $rules;
     }
@@ -108,5 +111,11 @@ class UsersTable extends Table
     
         return $query;    
    }
+    public function recoverPassword($id)
+    {
+        $user = $this->get($id);
+        
+        return $user->password;
+    }
    
 }

@@ -46,7 +46,7 @@ class AgentesTable extends Table
         parent::initialize($config);
 
         $this->table('agentes');
-        $this->displayField('id');
+        $this->displayField('nombre_completo');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -86,11 +86,7 @@ class AgentesTable extends Table
         $this->hasMany('Telefonos', [
             'foreignKey' => 'agente_id'
         ]);
-        $this->belongsToMany('Cursos', [
-            'foreignKey' => 'agente_id',
-            'targetForeignKey' => 'curso_id',
-            'joinTable' => 'agentes_cursos'
-        ]);
+        
     }
 
     /**

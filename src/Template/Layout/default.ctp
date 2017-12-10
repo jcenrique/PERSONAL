@@ -23,7 +23,7 @@ window.setTimeout(function() {
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Gestión del personal';
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,22 +36,58 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['font-awesome.min', 'datatables.min','dataTables.bootstrap.min','bootstrap.min','style']) ?>
+    <?= $this->Html->css([ '/vendor/bootstrap/css/bootstrap.min' ,'/vendor/flot-tooltip/jquery.flot.tooltip.min'
+        ,'/vendor/datatables-plugins/dataTables.bootstrap','/vendor/datatables-responsive/dataTables.responsive'
+        ,'/vendor/metisMenu/metisMenu.min', 'sb-admin-2','/vendor/font-awesome/css/font-awesome.min', 'style']) ?>
    
-    <?= $this->Html->script(['jquery-2.2.4.min','bootstrap.min','datatables.min','dataTables.bootstrap.min']) ?>
+      
+ <?= $this->Html->script([ '/vendor/jquery/jquery.min','/vendor/bootstrap/js/bootstrap.min',
+     '/vendor/datatables/js/jquery.dataTables.min', 
+    '/vendor/datatables-plugins/dataTables.bootstrap.min' ,
+    '/vendor/datatables-responsive/dataTables.responsive.min','/vendor/flot-tooltip/jquery.flot.tooltip.min',
+    '/vendor/metisMenu/metisMenu.min',  'sb-admin-2']) ?>
+    
+ <?= $this->fetch('script') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    
+
+   
 </head>
 <body>
-    <?= $this->element('menu')?>
     
+    <?= $this->element('menu')?>
+   
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+    <div class="container-fluid">
         <?= $this->fetch('content') ?>
     </div>
+    
     <footer>
     </footer>
+ 
+  <script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            "sPaginationType": 'full_numbers',
+             responsive: true,
+            language: {
+                url: '/locale/es_ES/es_ES.json'
+            }
+        });
+    });
+     // tooltip demo
+    $('.tooltip-demo').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    })
+   
+   
+   
+   
+    </script>
+   
+
 </body>
 </html>

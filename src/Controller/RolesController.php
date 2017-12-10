@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Core\Configure;
 /**
  * Roles Controller
  *
@@ -18,31 +18,14 @@ class RolesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $roles = $this->paginate($this->Roles);
+        $roles=$this->Roles->find('all');
+       
 
         $this->set(compact('roles'));
-        $this->set('_serialize', ['roles']);
+       
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Role id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $role = $this->Roles->get($id, [
-            'contain' => ['Permisos', 'Users']
-        ]);
-
-        $this->set('role', $role);
-        $this->set('_serialize', ['role']);
-    }
+    
 
     /**
      * Add method
@@ -55,16 +38,15 @@ class RolesController extends AppController
         if ($this->request->is('post')) {
             $role = $this->Roles->patchEntity($role, $this->request->data);
             if ($this->Roles->save($role)) {
-                $this->Flash->success(__('The role has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The role could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
-        $permisos = $this->Roles->Permisos->find('list', ['limit' => 200]);
-        $users = $this->Roles->Users->find('list', ['limit' => 200]);
-        $this->set(compact('role', 'permisos', 'users'));
-        $this->set('_serialize', ['role']);
+       
+        $this->set(compact('role'));
+      
     }
 
     /**
@@ -76,22 +58,19 @@ class RolesController extends AppController
      */
     public function edit($id = null)
     {
-        $role = $this->Roles->get($id, [
-            'contain' => ['Permisos', 'Users']
-        ]);
+        $role = $this->Roles->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $role = $this->Roles->patchEntity($role, $this->request->data);
             if ($this->Roles->save($role)) {
-                $this->Flash->success(__('The role has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The role could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
-        $permisos = $this->Roles->Permisos->find('list', ['limit' => 200]);
-        $users = $this->Roles->Users->find('list', ['limit' => 200]);
-        $this->set(compact('role', 'permisos', 'users'));
-        $this->set('_serialize', ['role']);
+        
+        $this->set(compact('role'));
+       
     }
 
     /**
@@ -105,11 +84,16 @@ class RolesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $role = $this->Roles->get($id);
-        if ($this->Roles->delete($role)) {
-            $this->Flash->success(__('The role has been deleted.'));
-        } else {
-            $this->Flash->error(__('The role could not be deleted. Please, try again.'));
+        try {
+           if ($this->Roles->delete($role)) {
+            $this->Flash->success(Configure::read ('REGISTRO_ELIMINADO'));
+            } else {
+                $this->Flash->error(Configure::read ('REGISTRO_NO_ELIMINADO'));
+            }
+        } catch (\PDOException $e) {
+           $this->Flash->error( $e->getMessage());
         }
+        
 
         return $this->redirect(['action' => 'index']);
     }

@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Core\Configure;
 /**
  * Residencias Controller
  *
@@ -19,32 +19,16 @@ class ResidenciasController extends AppController
     public function index()
     {
         
-        $this->paginate = [
-            'contain' => ['PuestosGestion','Agentes']
-        ];
-        $residencias = $this->paginate($this->Residencias);
+        
+        $residencias = $this->Residencias->find('all' ,[
+            'contain' => ['PuestosGestion']
+        ]);
 
         $this->set(compact('residencias'));
-        $this->set('_serialize', ['residencias']);
+       
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Residencia id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $residencia = $this->Residencias->get($id, [
-            'contain' => ['PuestosGestion', 'Agentes']
-        ]);
-    
-       
-        $this->set ('residencia',$residencia);
-        $this->set('_serialize', ['residencia']);
-    }
+  
 
     /**
      * Add method
@@ -57,15 +41,15 @@ class ResidenciasController extends AppController
         if ($this->request->is('post')) {
             $residencia = $this->Residencias->patchEntity($residencia, $this->request->data);
             if ($this->Residencias->save($residencia)) {
-                $this->Flash->success(__('The residencia has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The residencia could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
         $puestosGestion = $this->Residencias->PuestosGestion->find('list', ['limit' => 200]);
         $this->set(compact('residencia', 'puestosGestion'));
-        $this->set('_serialize', ['residencia']);
+       
     }
 
     /**
@@ -83,11 +67,11 @@ class ResidenciasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $residencia = $this->Residencias->patchEntity($residencia, $this->request->data);
             if ($this->Residencias->save($residencia)) {
-                $this->Flash->success(__('The residencia has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The residencia could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
         $puestosGestion = $this->Residencias->PuestosGestion->find('list', ['limit' => 200]);
         $this->set(compact('residencia', 'puestosGestion'));
@@ -106,9 +90,9 @@ class ResidenciasController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $residencia = $this->Residencias->get($id);
         if ($this->Residencias->delete($residencia)) {
-            $this->Flash->success(__('The residencia has been deleted.'));
+            $this->Flash->success(Configure::read ('REGISTRO_ELIMINADO'));
         } else {
-            $this->Flash->error(__('The residencia could not be deleted. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_ELIMINADO'));
         }
 
         return $this->redirect(['action' => 'index']);

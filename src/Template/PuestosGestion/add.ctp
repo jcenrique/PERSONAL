@@ -3,20 +3,31 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Puestos Gestion'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="puestosGestion form large-9 medium-8 columns content">
-    <?= $this->Form->create($puestosGestion) ?>
-    <fieldset>
-        <legend><?= __('Add Puestos Gestion') ?></legend>
-        <?php
-            echo $this->Form->input('puesto');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+             <h4><?= __('Crear Puesto Gestión') ?>
+                        <?php if($current_user['role_id'] == 1) :?>
+                            <?= $this->Html->link('<span class="fa fa-reply"></span>' . ' ' .  __('Lista de cartegorías'),
+                             $this->request->referer(),['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false] ) ?>
+                        <?php endif;?>
+                 </h4>
+                
+        </div>
+        
+        <div class="panel-body">
+            <?= $this->Form->create($puestosGestion) ?>
+    
+            
+            <?php
+                echo $this->Form->input('puesto');
+            ?>
+        </div>
+    
+        <div class="panel-footer">
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+    </div>
 </div>

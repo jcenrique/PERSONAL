@@ -53,4 +53,11 @@ class PuestosGestionTable extends Table
 
         return $validator;
     }
+     public function buildRules(RulesChecker $rules)
+    {
+        
+        $rules->add($rules->isUnique(['puesto']) , ['message' => __('El valor tiene que ser único')]);
+
+        return $rules;
+    }
 }

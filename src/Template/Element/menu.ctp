@@ -1,113 +1,113 @@
-<?
-  use SessionHandler;
-?>
 
-<nav class="navbar navbar-default" role="navigation" id="main_nav">
-  <!-- El logotipo y el icono que despliega el menú se agrupan
-       para mostrarlos mejor en los dispositivos móviles -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse"
-            data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Desplegar navegación</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#"><?=$this->Html->image("logo.png");?>  </a>
-  </div>
- 
-  <!-- Agrupar los enlaces de navegación, los formularios y cualquier
-       otro elemento que se pueda ocultar al minimizar la barra -->
-  
-  
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-   
-    <?php if(isset($current_user)): ?>
-  <?php if($current_user['role_id'] == 1): ?>
-  
-    <ul class="nav navbar-nav">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <?= __('Agentes')?><b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#"><?= __('Lista agentes')?></a></li>
-          <li><a href="#"><?= __('Telefonos agentes')?></a></li>
-          
-        </ul>
-      </li>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" id="main_nav">
+    <!-- El logotipo y el icono que despliega el menú se agrupan
+         para mostrarlos mejor en los dispositivos móviles -->
+    <div>
        
-       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <?= __('Formación')?><b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#"><?= __('Cursos')?></a></li>
-          <li><a href="#"><?= __('Cursos agentes')?></a></li>
-          
-        </ul>
-      </li>
-      
-      
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <?= __('Situaciones')?><b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#"><?= __('Sabados')?></a></li>
-          <li><a href="#"><?= __('Horas cómputo')?></a></li>
-          <li><a href="#"><?= __('Disponibilidad')?></a></li>
-          <li class="divider"></li>
-          <li><a href="#"><?= __('Reconocimientos médicos')?></a></li>
-          <li class="divider"></li>
-          <li><a href="#"><?= __('Observaciones')?></a></li>
-        </ul>
-      </li>
+        <?=$this->Html->image("logo.png", [
+        "alt" => "gestionPM",
+        'url' => ['controller' => 'Users', 'action' => 'login'] , 'class'=> 'navbar-brand']);?>
+    </div>
+   
+    <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+         otro elemento que se pueda ocultar al minimizar la barra -->
     
-    </ul>
- 
-    <?php endif; ?>
-    <ul class="nav navbar-nav navbar-right">
-     
-      <?php if($current_user['role_id'] == 1): ?>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-         <?= __('Configuración')?> <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#"><?= __('Puestos de gestión')?></a></li>
-          <li><a href="#"><?= __('Residencias')?></a></li>
-          <li><a href="#"><?= __('Estaciones')?></a></li>
-          
-           <li class="divider"></li>
-          <li>
-          <li><a href="#"><?= __('Categorías')?></a></li>
-          <li><a href="#"><?= __('Roles')?></a></li>
-          <li><a href="#"><?= __('Usuarios')?></a></li>
-          
-        </li>
-        </ul>
-      </li>
-     <?php endif; ?>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-         <?= __('Menu usuario') . ' '?> <?=  $this->Gravatar->avatar($current_user['email'], 
-           ['size' => 25 , 'class'=>"img-rounded border-radius:15px"]); ' '?> <b class="caret"></b>
-        </a>
-         
-        <ul class="dropdown-menu">
-          <li><a href="#"><?= __('Cuenta')?></a></li>
-          
-           <li class="divider"></li>
-          <li>
+    
+   
+     <ul class="nav navbar-top-links navbar-right">
+        <?php if(isset($current_user)): ?>
+        <?php if($current_user['role_id'] == 1): ?>
+      
+        
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class ="fa fa-users"></span>
+                   <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                     <li><?= $this->Html->link('<span class ="fa fa-users"></span>' . ' ' . __('Agentes') , 
+                    ['controller' => '../Agentes' , 'action' => 'index'], ['escape' => false]) ?></li>
+                    <li><a href="#"><?= __('Telefonos agentes')?></a></li>
+                  
+                </ul>
+            </li>
            
-            
-          <?=$this->Html->link (__('Salir'),['controller' => 'Users'  ,'action' => 'logout']  ) ?>
-        </li>
-        </ul>
-      </li>
-    </ul>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class ="fa fa-university"></span>
+                   <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><?= $this->Html->link('<span class ="fa fa-book"></span>' . ' ' . __('Cursos') , 
+                    ['controller' => '../formations/Cursos' , 'action' => 'index'], ['escape' => false]) ?></li>
+                     <li><?= $this->Html->link('<span class ="fa fa-archive"></span>' . ' ' . __('Formaciones') , 
+                    ['controller' => '../formations/Formaciones' , 'action' => 'index'], ['escape' => false]) ?></li>
+                    <li><?= $this->Html->link('<span class ="fa fa-mortar-board"></span>' . ' ' . __('Agentes-Formaciones') , 
+                    ['controller' => '../formations/AgentesFormations' , 'action' => 'index'], ['escape' => false]) ?></li>
+                  
+                </ul>
+            </li>
+          
+          
+          
      
-    <?php endif; ?>
-  </div>
+        <?php endif; ?>
+        
+        
+         
+          <?php if($current_user['role_id'] == 1): ?>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class ="fa fa-cog"></span>
+             <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><?= $this->Html->link('<span class ="fa fa-desktop"></span>' . ' ' . __('Puestos de gestión') , 
+                    ['controller' => '../PuestosGestion' , 'action' => 'index'], ['escape' => false]) ?></li>
+              
+              <li><?= $this->Html->link('<span class ="fa fa-building"></span>' . ' ' . __('Residencias') , 
+                    ['controller' => '../Residencias' , 'action' => 'index'], ['escape' => false]) ?></li>
+             
+             <li><?= $this->Html->link('<span class ="fa fa-home"></span>' . ' ' . __('Estaciones') , 
+                    ['controller' => '../Estaciones' , 'action' => 'index'], ['escape' => false]) ?></li>
+              
+               <li class="divider"></li>
+              <li>
+              <li><?= $this->Html->link('<span class ="fa fa-user-md"></span>' . ' ' . __('Roles') , 
+                    ['controller' => '../Roles' , 'action' => 'index'], ['escape' => false]) ?></li>
+              
+            </li>
+              <li><?= $this->Html->link('<span class ="fa fa-sitemap"></span>' . ' ' . __('Categorías') , 
+                    ['controller' => '../Cargos' , 'action' => 'index'], ['escape' => false]) ?></li>
+              
+            </li>
+              
+              <li><?= $this->Html->link('<span class ="fa fa-users"></span>' . ' ' . __('Usuarios') , 
+                    ['controller' => '../Users' , 'action' => 'index'], ['escape' => false]) ?></li>
+              
+            </li>
+            </ul>
+          </li>
+         <?php endif; ?>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+             <?=$this->Gravatar->avatar($current_user['email'] , 
+               ['size' => 25 , 'class'=>"img-rounded border-radius:15px"])?><b class="caret"></b>
+            </a>
+             
+            <ul class="dropdown-menu dropdown-user">
+               <li><?= $this->Html->link('<span class ="fa fa-user"></span>' . ' ' . __('Cuenta') , 
+                    ['controller' => '../Users' , 'action' => 'edit' , $current_user['id']], ['escape' => false]) ?></li>
+              
+               <li class="divider"></li>
+              
+              <li><?= $this->Html->link('<span class ="fa fa-sign-out"></span>' . ' ' . __('Salir') , 
+                    ['controller' => '../Users' , 'action' => 'logout' ], ['escape' => false]) ?></li>
+                
+             
+            </ul>
+          </li>
+        
+         
+        <?php endif; ?>
+   </ul>
+   
 </nav>

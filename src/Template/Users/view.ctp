@@ -1,16 +1,16 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<div class="row" style ="padding-top: 10px" >   
-        <?= $this->Html->link(__('Lista de usuarios'), ['action' => 'index'],['class'=> 'btn btn-primary']) ?>
-  </div>
 
-<div class="container">
-        <div class="page-header">
-            <h3><?= $user->nombre_completo ?></h3>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+            <h4><?= $user->nombre_completo ?>
+                    <?php if($current_user['role_id'] == 1) :?>
+                        <?= $this->Html->link('<span class="fa fa-reply"></span>',
+                        ['action' => 'index'],['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false,' data-toggle'=> 'tooltip', 'title'=> __('Volver')] ) ?>
+                    <?php endif;?>
+            </h4>
         </div>
+        <div class="panel-body">
        <table class="table table-striped table-bordered">
         <tr>
             <th scope="row"><?= __('Usuario') ?></th>
@@ -43,5 +43,6 @@
             <td><?= h($user->modified->nice()) ?></td>
         </tr>
     </table>
-   
+   </div>
+   </div>
 </div>

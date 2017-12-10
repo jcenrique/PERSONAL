@@ -13,10 +13,16 @@ use Cake\Core\Configure;
  */
 class UsersController extends AppController
 {
+     public function home()
+     {
+         
+     }
+    
+     
      public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('register');
+        $this->Auth->allow(['login' , 'register' , 'recuperar']);
     }
     /**
      * Index method
@@ -143,15 +149,32 @@ public function register()
     }
     
     public function login (){
-        if($this->request->is('post')){
-                $user =$this->Auth->identify();
-                if($user){
-                    $this->Auth->setUser($user);
+         if($this->request->is('post'))   
+        {
+            
+            $user = $this->Auth->identify();
+            if($user)
+            {
+             
+                $this->Auth->setUser($user);
+                if($user->role_id==1)
+                {
                     return $this->redirect($this->Auth->redirectUrl());
-                    
-                }else{
-                    $this->Flash->error(_('Los datos no son válidos, por favor intentelo de nuevo'), ['key' => 'auth']);
                 }
+                else
+                {
+                     return  $this->redirect(['controller' => 'Users' , 'action' => 'home', $this->Auth->user('id')]);
+                }
+            }
+            else
+            {
+                $this->Flash->error('Los datos no son validos, por favor intentelo de nuevo' , ['key' => 'auth']);
+            }
+        }
+        
+        if($this->Auth->user())
+        {
+            return  $this->redirect(['controller' => 'Users' , 'action' => 'view', $this->Auth->user('id')]);
         }
         
     }
@@ -163,13 +186,26 @@ public function register()
     public function isAuthorized($user)
     {
          if(isset($user['role_id']) and $user ['role_id'] == 2){
-           if(in_array($this->request->action, ['logout','index','view'])){
+           if(in_array($this->request->action, ['logout','register','home' ])){
             return true;
            }
-           
+           if(in_array($this->request->action, ['edit','view']))
+            {
+                
+                $id = $this->request->params['pass'][0];
+                
+                if($user['id'] == $id)
+                {
+                     return true;
+                }
+             }
         }
         return parent::isAuthorized($user);
     }
     
-   
+    public function recuperar()
+    {
+        echo 'Pendiente de crear';
+        exit();
+    }
 }

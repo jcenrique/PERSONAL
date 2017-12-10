@@ -11,7 +11,8 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "friendsofcake/bootstrap-ui": "^1.2",
-        "potatopowered/gravatar-helper": "^1.0"
+        "potatopowered/gravatar-helper": "^1.0",
+        "box/spout" : "dev-master"
     },
     "require-dev": {
         "psy/psysh": "@stable",

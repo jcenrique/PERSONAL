@@ -18,26 +18,13 @@ class CargosController extends AppController
      */
     public function index()
     {
-        $cargos = $this->paginate($this->Cargos);
+        $cargos = $this->Cargos->find('all');
 
         $this->set(compact('cargos'));
-        $this->set('_serialize', ['cargos']);
+       
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Cargo id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $cargo = $this->Cargos->get($id);
-
-        $this->set('cargo', $cargo);
-        $this->set('_serialize', ['cargo']);
-    }
+    
 
     /**
      * Add method
@@ -82,7 +69,7 @@ class CargosController extends AppController
             $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
         $this->set(compact('cargo'));
-        $this->set('_serialize', ['cargo']);
+       
     }
 
     /**

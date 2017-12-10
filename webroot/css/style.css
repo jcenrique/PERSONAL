@@ -8,3 +8,54 @@ hace scroll en las tablas
 .scrollme {
     overflow-y: auto;
 }
+.dataTables_filter input { width:75% }
+
+body{
+            font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+        }
+
+        .center{
+            text-align:center;
+        }
+
+        .table-bordered {
+            border: 1px solid #E8E8E8;
+            border-collapse : collapse; 
+            font-size :11px;
+        }
+td {
+            vertical-align: bottom;
+            border: 1px solid #E8E8E8;
+            border-spacing: 0;
+            border-collapse: collapse;
+            text-align:center;
+        }
+
+       thead>tr>th {
+            vertical-align: bottom;
+            border: 1px solid #888888;
+            border-spacing: 0;
+            text-align:center;
+            border-collapse: collapse;
+            background : #FAFAFA;
+            color:#8A0808;
+            font-size :14px;
+        }
+
+.actions{
+	font-size :15px;
+}
+
+.header>td{
+    font-weight:bold;
+    background : #FAFAFA;               
+}
+.noStyle table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}

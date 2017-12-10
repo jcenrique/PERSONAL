@@ -3,22 +3,29 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Cargos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Agentes'), ['controller' => 'Agentes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Agente'), ['controller' => 'Agentes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="cargos form large-9 medium-8 columns content">
-    <?= $this->Form->create($cargo) ?>
-    <fieldset>
-        <legend><?= __('Add Cargo') ?></legend>
-        <?php
-            echo $this->Form->input('cargo');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+            
+                 <h4><?= __('Nueva Categoría') ?>
+                        <?php if($current_user['role_id'] == 1) :?>
+                            <?= $this->Html->link('<span class="fa fa-list"></span>' ,
+                             $this->request->referer(),['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false ,'data-toggle'=> 'tooltip', 'title'=> __('Volver')] ) ?>
+                        <?php endif;?>
+                 </h4>
+                
+        </div>
+        
+        <div class="panel-body">
+            <?= $this->Form->create($cargo) ?>
+    
+            <?php
+                echo $this->Form->input('cargo', ['label' => __('Categoría')]);
+            ?>
+        </div>
+        <div class="panel-footer">
+            <?= $this->Form->button(__('Crear')) ?>
+            <?= $this->Form->end() ?>
+        </div>
 </div>

@@ -1,48 +1,37 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Cargo'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Agentes'), ['controller' => 'Agentes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Agente'), ['controller' => 'Agentes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="cargos index large-9 medium-8 columns content">
-    <h3><?= __('Cargos') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('Id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('cargo') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($cargos as $cargo): ?>
-            <tr>
-                <td><?= $this->Number->format($cargo->Id) ?></td>
-                <td><?= h($cargo->cargo) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $cargo->Id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $cargo->Id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $cargo->Id], ['confirm' => __('Are you sure you want to delete # {0}?', $cargo->Id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<div class="col-md-12">
+    <div class="panel panel-default" style="margin-top:20px">
+        <div class="panel-heading" style ="font-size: 150%;">
+            <?= __('Categorias') ?> <?= $this->Html->link('<span class="fa fa-plus"></span>' ,
+            ['action' => 'add'],['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false ,'data-toggle'=> 'tooltip', 'title'=> __('Añadir')] ) ?>
+               
+        </div>
+        
+        <div class="panel-body">
+            <table id="myTable" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col"><?= $this->Paginator->sort('cargo' ,['label' => 'Categoría']) ?></th>
+                        <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($cargos as $cargo): ?>
+                    <tr>
+                       
+                        <td><?= h($cargo->cargo) ?></td>
+                        <td class="actions">
+                            <div class="tooltip-demo">
+                            <?= $this->Html->link('<i class="fa fa-pencil" aria-hidden="true"></i>', ['action' => 'edit', $cargo->Id],
+                                                ['escape' => false, 'data-toggle'=> 'tooltip', 'title'=> __('Editar')]) ?><i>&nbsp&nbsp</i>
+                            <?= $this->Form->postLink('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['action' => 'delete', $cargo->Id], 
+                            ['confirm' => __('Está usted seguro de eliminar el registro:  {0}?', $cargo->cargo),'escape' => false , 'data-toggle'=> 'tooltip', 'title'=> __('Eliminar')]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

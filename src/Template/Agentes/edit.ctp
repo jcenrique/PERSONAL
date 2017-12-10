@@ -8,23 +8,38 @@
   $opciones[2] ='Inactivo';
 ?>
 
-<div class="agentes form large-9 medium-8 columns content">
-    <?= $this->Form->create($agente) ?>
-    <fieldset>
-        <legend><?= __('Edit Agente') ?></legend>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+            
+                 <h5><?=  __('Editar Agente') ?>
+                        <?php if($current_user['role_id'] == 1) :?>
+                            <div class ="pull-right tooltip-demo">
+                                <?= $this->Html->link('<span class="fa fa-reply"></span>' ,
+                                 $this->request->referer(),['class'=> 'btn btn-sm btn-success'  ,'escape' => false ,'data-toggle'=> 'tooltip', 'title'=> __('Volver')] ) ?>
+                             </div>
+                        <?php endif;?>
+                 </h5>
+                
+        </div>
+        
+        <div class="panel-body">
+       <?= $this->Form->create($agente) ?>
         <?php
             echo $this->Form->input('apellido1');
             echo $this->Form->input('apellido2');
             echo $this->Form->input('nombre');
             echo $this->Form->input('cargo_id', ['options' => $cargos]);
-          
-            echo $this->Form->input('residencia_id',['options' => $residencias] );
-            echo $this->Form->input('codigo_agente');
-            
+            echo $this->Form->input('residencia_id', ['options' => $residencias]);
+             echo $this->Form->control('codigo_agente', ['type' => 'number']);
             echo $this->Form->input('status',['options' => $opciones]);
-            echo $this->Form->input('cursos._ids', ['options' => $cursos]);
+          
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+        </div>
+    <div class="panel-footer">
+            <?= $this->Form->button(__('Modificar')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+</div>
 </div>

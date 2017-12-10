@@ -3,50 +3,55 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Residencia'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Puestos Gestion'), ['controller' => 'PuestosGestion', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Puestos Gestion'), ['controller' => 'PuestosGestion', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Agentes'), ['controller' => 'Agentes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Agente'), ['controller' => 'Agentes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="residencias index large-9 medium-8 columns content">
-    <h3><?= __('Residencias') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('Id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('puesto_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('residencia') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($residencias as $residencia): ?>
-            <tr>
-                <td><?= $this->Number->format($residencia->Id) ?></td>
-                <td><?= $residencia->has('puestos_gestion') ? $this->Html->link($residencia->puestos_gestion->puesto, ['controller' => 'PuestosGestion', 'action' => 'view', $residencia->puestos_gestion->id]) : '' ?></td>
-                <td><?= h($residencia->residencia) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $residencia->Id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $residencia->Id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $residencia->Id], ['confirm' => __('Are you sure you want to delete # {0}?', $residencia->Id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<script>
+$(document).ready(function() {
+       $('#myTable').DataTable( {
+            language: {
+                url: '/locale/es_ES/es_ES.json'
+            }
+        } );
+    } );
+</script>
+
+
+
+<div class="col-md-12">
+    <div class="panel panel-default" style="margin-top:20px">
+        <div class="panel-heading" style ="font-size: 150%;">
+            <?= __('Residencias') ?> <?= $this->Html->link('<span class="fa fa-plus"></span>',
+            ['action' => 'add'],['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false,'data-toggle'=> 'tooltip', 'title'=> __('Añadir')] ) ?>
+           
+         </div>
+    
+        <div class="panel-body">
+            <table id="myTable" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        
+                        
+                        <th scope="col"><?= ('Residencia') ?></th>
+                        <th scope="col"><?= ('Puesto') ?></th>
+                        <th scope="col"><?= __('Acciones') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($residencias as $residencia): ?>
+                    <tr>
+                        <td><?= h($residencia->residencia) ?></td>
+                        <td><?= $residencia->has('puestos_gestion') ? $residencia->puestos_gestion['puesto']: '' ?></td>
+                        <td class="actions">
+                             <div class="tooltip-demo">
+                            <?= $this->Html->link('<i class="fa fa-pencil" aria-hidden="true"></i>', ['action' => 'edit', $residencia->Id],
+                                                        ['escape' => false, 'data-toggle'=> 'tooltip', 'title'=> __('Editar')]) ?><i>&nbsp&nbsp</i>
+                                        <?= $this->Form->postLink('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['action' => 'delete', $residencia->Id], 
+                                        ['confirm' => __('Está usted seguro de eliminar el registro:  {0}?', $residencia->residencia),'escape' => false , 'data-toggle'=> 'tooltip', 'title'=> __('Eliminar')]) ?>
+                            </div>                    
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 </div>

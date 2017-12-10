@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Core\Configure;
 /**
  * Agentes Controller
  *
@@ -37,6 +37,23 @@ class AgentesController extends AppController
         
         $this->set('_serialize', ['agentes']);
     }
+    public function exportarExcel()
+    {
+       
+       
+       
+       
+            $agentes= $this->Agentes->find('all')
+            ->contain(['Cargos', 'Residencias'])
+            ->order(['Cargos.cargo'=>'asc' , 'Residencias.residencia' => 'asc' , 'apellido1' => 'asc']);
+            
+            
+       
+        
+        $this->set(compact('agentes'));
+        
+         $this->Render = false;
+    }
 
     /**
      * View method
@@ -48,12 +65,12 @@ class AgentesController extends AppController
     public function view($id = null)
     {
         $agente = $this->Agentes->get($id, [
-            'contain' => ['Cargos', 'Residencias', 'Cursos', 'DevolucionesComputo', 'DevolucionesSabados', 'DiaAdicionalVacaciones', 'Disponibilidad', 'HorasComputo', 'Observaciones', 'ReconocimientosMedico', 'SabadosTrabajados', 'Telefonos']
+            'contain' => ['Cargos', 'Residencias']
         ]);
         
         $this->set('agente', $agente);
        
-        $this->set('_serialize', ['agente']);
+      
     }
 
     /**
@@ -67,16 +84,16 @@ class AgentesController extends AppController
         if ($this->request->is('post')) {
             $agente = $this->Agentes->patchEntity($agente, $this->request->data);
             if ($this->Agentes->save($agente)) {
-                $this->Flash->success(__('The agente has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The agente could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
         $cargos = $this->Agentes->Cargos->find('list', ['limit' => 200]);
         $residencias = $this->Agentes->Residencias->find('list', ['limit' => 200]);
-        $cursos = $this->Agentes->Cursos->find('list', ['limit' => 200]);
-        $this->set(compact('agente', 'cargos', 'residencias', 'cursos'));
+        
+        $this->set(compact('agente', 'cargos', 'residencias'));
         $this->set('_serialize', ['agente']);
     }
 
@@ -89,24 +106,23 @@ class AgentesController extends AppController
      */
     public function edit($id = null)
     {
-        $agente = $this->Agentes->get($id, [
-             'contain' => ['Cargos', 'Residencias', 'Cursos', 'DevolucionesComputo', 'DevolucionesSabados', 'DiaAdicionalVacaciones', 'Disponibilidad', 'HorasComputo', 'Observaciones', 'ReconocimientosMedico', 'SabadosTrabajados', 'Telefonos']
-        ]);
+        $agente = $this->Agentes->get($id);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $agente = $this->Agentes->patchEntity($agente, $this->request->data);
             if ($this->Agentes->save($agente)) {
-                $this->Flash->success(__('The agente has been saved.'));
+                $this->Flash->success(Configure::read ('REGISTRO_GUARDADO'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The agente could not be saved. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_GUARDADO'));
         }
         $cargos = $this->Agentes->Cargos->find('list', ['limit' => 200]);
         $residencias = $this->Agentes->Residencias->find('list');
        
-        $cursos = $this->Agentes->Cursos->find('list', ['limit' => 200]);
-        $this->set(compact('agente', 'cargos', 'residencias', 'cursos'));
-        $this->set('_serialize', ['agente']);
+       
+        $this->set(compact('agente', 'cargos', 'residencias'));
+       
     }
 
     /**
@@ -121,9 +137,9 @@ class AgentesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $agente = $this->Agentes->get($id);
         if ($this->Agentes->delete($agente)) {
-            $this->Flash->success(__('The agente has been deleted.'));
+            $this->Flash->success(Configure::read ('REGISTRO_ELIMINADO'));
         } else {
-            $this->Flash->error(__('The agente could not be deleted. Please, try again.'));
+            $this->Flash->error(Configure::read ('REGISTRO_NO_ELIMINADO'));
         }
 
         return $this->redirect(['action' => 'index']);

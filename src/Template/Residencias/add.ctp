@@ -3,25 +3,31 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Residencias'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Puestos Gestion'), ['controller' => 'PuestosGestion', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Puestos Gestion'), ['controller' => 'PuestosGestion', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Agentes'), ['controller' => 'Agentes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Agente'), ['controller' => 'Agentes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="residencias form large-9 medium-8 columns content">
-    <?= $this->Form->create($residencia) ?>
-    <fieldset>
-        <legend><?= __('Add Residencia') ?></legend>
-        <?php
-            echo $this->Form->input('puesto_id', ['options' => $puestosGestion, 'empty' => true]);
-            echo $this->Form->input('residencia');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="col-md-6 col-md-offset-3">
+    
+    <div class="panel panel-default" style="margin-top:30px">
+        <div class="panel-heading">
+            
+                 <h4><?= __('Crear residencia') ?>
+                        <?php if($current_user['role_id'] == 1) :?>
+                            <?= $this->Html->link('<span class="fa fa-reply"></span>' . ' ' .  __('Lista de residencias'),
+                             $this->request->referer(),['class'=> 'btn btn-sm btn-success pull-right'  ,'escape' => false] ) ?>
+                        <?php endif;?>
+                 </h4>
+                
+        </div>
+        
+        <div class="panel-body">
+            <?= $this->Form->create($residencia) ?>
+           
+                <?php
+                    echo $this->Form->input('puesto_id', ['options' => $puestosGestion, 'empty' => true]);
+                    echo $this->Form->input('residencia');
+                ?>
+        </div>
+        
+        <div class="panel-footer">
+            <?= $this->Form->button(__('Crear'),['class'=> 'btn btn-success']) ?>
+        </div>
+        <?= $this->Form->end() ?>
 </div>

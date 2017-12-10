@@ -54,10 +54,17 @@ class ResidenciasTable extends Table
     public function validationDefault(Validator $validator)
     {
        
+        $validator
+       ->add('id' , 'valid' , ['rule' => 'numeric'])
+       ->notEmpty('id' , 'create');
 
+       $validator
+       ->requirePresence('first_name' , 'create')
+       ->notEmpty('first_name', __('El campo no puede estar vacio'));
+       
         $validator
             ->requirePresence('residencia', 'create')
-            ->notEmpty('residencia');
+            ->notEmpty('residencia', __('El campo no puede estar vacio'));
 
         return $validator;
     }
@@ -72,6 +79,7 @@ class ResidenciasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['puesto_id'], 'PuestosGestion'));
+        $rules->add($rules->isUnique(['puesto_id','residencia']) , ['message' => __('El valor tiene que ser único')]);
 
         return $rules;
     }

@@ -37,13 +37,14 @@ class RolesTable extends Table
         $this->displayField('rol');
         $this->primaryKey('id');
 
-        $this->belongsToMany('Permisos', [
+       /* $this->belongsToMany('Permisos', [
             'foreignKey' => 'role_id',
             'targetForeignKey' => 'permiso_id',
             'joinTable' => 'permisos_roles'
-        ]);
+        ]);*/
         $this->hasMany('Users', [
-            'foreignKey' => 'role_id'
+            'foreignKey' => 'role_id',
+            
         ]);
     }
 
@@ -76,8 +77,9 @@ class RolesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['role_id'], 'Users'));
         $rules->add($rules->isUnique(['rol']));
-
+        
         return $rules;
     }
 }
